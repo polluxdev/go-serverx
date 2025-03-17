@@ -40,13 +40,11 @@ func New(handler http.Handler, opts ...Option) *Server {
 		opt(s)
 	}
 
-	s.start()
-
 	return s
 }
 
-// start -.
-func (s *Server) start() {
+// Start -.
+func (s *Server) Start() {
 	go func() {
 		s.notify <- s.server.ListenAndServe()
 		close(s.notify)
