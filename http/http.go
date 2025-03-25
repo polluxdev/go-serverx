@@ -2,6 +2,7 @@ package http
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 )
@@ -15,6 +16,7 @@ const (
 
 // Server -.
 type Server struct {
+	addr            string
 	server          *http.Server
 	notify          chan error
 	shutdownTimeout time.Duration
@@ -30,6 +32,7 @@ func New(handler http.Handler, opts ...Option) *Server {
 	}
 
 	s := &Server{
+		addr:            _defaultAddr,
 		server:          httpServer,
 		notify:          make(chan error, 1),
 		shutdownTimeout: _defaultShutdownTimeout,
@@ -45,6 +48,8 @@ func New(handler http.Handler, opts ...Option) *Server {
 
 // Start -.
 func (s *Server) Start() {
+	log.Printf("[http] server is starting on %s...", s.addr)
+
 	go func() {
 		s.notify <- s.server.ListenAndServe()
 		close(s.notify)

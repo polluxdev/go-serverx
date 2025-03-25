@@ -1,6 +1,7 @@
 package fasthttp
 
 import (
+	"log"
 	"time"
 
 	"github.com/valyala/fasthttp"
@@ -46,6 +47,8 @@ func New(handler fasthttp.RequestHandler, opts ...Option) *Server {
 
 // Start -.
 func (s *Server) Start() {
+	log.Printf("[fasthttp] server is starting on %s...", s.addr)
+
 	go func() {
 		s.notify <- s.server.ListenAndServe(s.addr)
 		close(s.notify)
