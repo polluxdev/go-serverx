@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net"
 	"time"
 )
@@ -11,7 +12,7 @@ type Option func(*Server)
 // Port -.
 func Port(port string) Option {
 	return func(s *Server) {
-		s.addr = port
+		s.addr = fmt.Sprintf(":%s", port)
 		s.server.Addr = net.JoinHostPort("", port)
 	}
 }
