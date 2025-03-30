@@ -3,6 +3,7 @@ module github.com/polluxdev/go-serverx
 go 1.24.0
 
 require (
+	github.com/gorilla/websocket v1.5.3
 	github.com/valyala/fasthttp v1.59.0
 	google.golang.org/grpc v1.71.0
 )
