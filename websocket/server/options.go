@@ -1,16 +1,22 @@
 package server
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
+// Option-.
 type Option func(*Server)
 
-func Addr(addr string) Option {
+// Port -.
+func Port(addr string) Option {
 	return func(s *Server) {
-		s.addr = addr
-		s.server.Addr = addr
+		s.addr = fmt.Sprintf(":%s", addr)
+		s.server.Addr = s.addr
 	}
 }
 
+// ShutdownTimeout -.
 func ShutdownTimeout(timeout time.Duration) Option {
 	return func(s *Server) {
 		s.shutdownTimeout = timeout
