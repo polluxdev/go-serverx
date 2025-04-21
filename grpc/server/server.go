@@ -24,8 +24,9 @@ type Server struct {
 }
 
 // New -.
-func New(register func(*grpc.Server), opts ...Option) (*Server, error) {
+func New(server *grpc.Server, opts ...Option) (*Server, error) {
 	s := &Server{
+		server:          server,
 		addr:            _defaultAddr,
 		notify:          make(chan error, 1),
 		shutdownTimeout: _defaultShutdownTimeout,
@@ -41,9 +42,6 @@ func New(register func(*grpc.Server), opts ...Option) (*Server, error) {
 		return nil, err
 	}
 	s.listener = lis
-
-	s.server = grpc.NewServer()
-	register(s.server) // allows user to register services
 
 	return s, nil
 }
